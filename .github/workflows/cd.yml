@@ -1,0 +1,28 @@
+name: Deployment readiness gate
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install validation tools
+        run: python -m pip install --upgrade pip pytest ruff
+      - name: Lint core domain
+        run: ruff check packages/core-domain/pesaguard_core tests/unit
+      - name: Run core domain tests
+        run: python -m pytest -q tests/unit/test_reconciliation_matching.py tests/unit/test_repository_hygiene.py
+      - name: Build gateway image
+        run: docker build --tag pesaguard-gateway:readiness-check gateway
+
+# This workflow intentionally does not deploy to staging or production. Add an
+# explicit, reviewed deployment job only after environment protection, secrets,
+# migration and rollback procedures are configured and tested.
