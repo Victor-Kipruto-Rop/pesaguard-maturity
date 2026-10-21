@@ -22,7 +22,7 @@ jobs:
       - name: Lint new core domain and tests
         run: ruff check packages/core-domain/pesaguard_core tests/unit
       - name: Test deterministic reconciliation and repository gates
-        run: python -m pytest -q tests/unit/test_reconciliation_matching.py tests/unit/test_statement_csv_import.py tests/unit/test_repository_hygiene.py
+        run: python -m pytest -q tests/unit/test_reconciliation_matching.py tests/unit/test_statement_csv_import.py tests/unit/test_transaction_state.py tests/unit/test_repository_hygiene.py
 
   gateway:
     runs-on: ubuntu-latest
