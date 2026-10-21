@@ -1,13 +1,53 @@
-# Local PKI and deployment artifacts
-security/pki/
-deployments/local-mtls/
-deployments/kubernetes/base/gateway-tls-secret.yaml
-
 # Python bytecode and caches
 __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
-# Gateway local env should not be committed
+# Virtual environments
+.venv/
+venv/
+**/.venv/
+**/venv/
+
+# Local environment and secret files; keep example templates
+.env
+.env.*
+*.env
+!**/.env.example
+!**/env.example
 gateway/.env
+gateway/new.env
+
+# Local databases and generated runtime data
+*.db
+*.sqlite
+*.sqlite3
+logs/
+**/logs/
+storage/temp/
+storage/uploads/
+storage/exports/
+
+# Test and coverage outputs
+.coverage
+coverage.xml
+htmlcov/
+.tox/
+
+# Build and package outputs
+build/
+dist/
+*.egg-info/
+
+# Local certificates and deployment secrets
+security/pki/
+deployments/local-mtls/
+deployments/kubernetes/base/gateway-tls-secret.yaml
+*.pem
+*.key
+*.p12
+*.pfx
