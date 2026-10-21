@@ -1,5 +1,5 @@
 import os
-from typing import Any, List
+from typing import Any
 
 from pydantic import AliasChoices, BaseModel, ConfigDict, Field, model_validator
 
@@ -19,8 +19,8 @@ class Settings(BaseModel):
     jwt_audience: str = Field(default="pesaguard-api", validation_alias=AliasChoices("jwt_audience", "JWT_AUDIENCE"))
     access_token_ttl_minutes: int = Field(default=15, ge=1, le=60, validation_alias=AliasChoices("access_token_ttl_minutes", "ACCESS_TOKEN_TTL_MINUTES"))
     refresh_token_ttl_days: int = Field(default=7, ge=1, le=30, validation_alias=AliasChoices("refresh_token_ttl_days", "REFRESH_TOKEN_TTL_DAYS"))
-    trusted_hosts: List[str] = Field(default_factory=lambda: ["*"], validation_alias=AliasChoices("trusted_hosts", "TRUSTED_HOSTS"))
-    cors_origins: List[str] = Field(default_factory=lambda: ["*"], validation_alias=AliasChoices("cors_origins", "CORS_ORIGINS"))
+    trusted_hosts: list[str] = Field(default_factory=lambda: ["*"], validation_alias=AliasChoices("trusted_hosts", "TRUSTED_HOSTS"))
+    cors_origins: list[str] = Field(default_factory=lambda: ["*"], validation_alias=AliasChoices("cors_origins", "CORS_ORIGINS"))
 
     @model_validator(mode="after")
     def validate_production_security(self) -> "Settings":
