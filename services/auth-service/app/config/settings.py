@@ -17,18 +17,30 @@ class Settings(BaseModel):
     jwt_algorithm: str = Field(default="HS256", validation_alias=AliasChoices("jwt_algorithm", "JWT_ALGORITHM"))
     jwt_issuer: str = Field(default="pesaguard", validation_alias=AliasChoices("jwt_issuer", "JWT_ISSUER"))
     jwt_audience: str = Field(default="pesaguard-api", validation_alias=AliasChoices("jwt_audience", "JWT_AUDIENCE"))
-    access_token_ttl_minutes: int = Field(default=15, validation_alias=AliasChoices("access_token_ttl_minutes", "ACCESS_TOKEN_TTL_MINUTES"))
-    refresh_token_ttl_days: int = Field(default=7, validation_alias=AliasChoices("refresh_token_ttl_days", "REFRESH_TOKEN_TTL_DAYS"))
+    access_token_ttl_minutes: int = Field(default=15, ge=1, le=60, validation_alias=AliasChoices("access_token_ttl_minutes", "ACCESS_TOKEN_TTL_MINUTES"))
+    refresh_token_ttl_days: int = Field(default=7, ge=1, le=30, validation_alias=AliasChoices("refresh_token_ttl_days", "REFRESH_TOKEN_TTL_DAYS"))
     trusted_hosts: List[str] = Field(default_factory=lambda: ["*"], validation_alias=AliasChoices("trusted_hosts", "TRUSTED_HOSTS"))
     cors_origins: List[str] = Field(default_factory=lambda: ["*"], validation_alias=AliasChoices("cors_origins", "CORS_ORIGINS"))
 
     @model_validator(mode="after")
     def validate_production_security(self) -> "Settings":
-        if self.environment == "production":
-            if self.jwt_algorithm != "HS256" or len(self.secret_key) < 32:
-                raise ValueError("production requires a strong HS256 secret or external OIDC integration")
-            if "*" in self.trusted_hosts or "*" in self.cors_origins:
-                raise ValueError("wildcard trusted hosts and CORS origins are not allowed in production")
+        if self.environment.strip().lower() == "production":
+            if self.debug:
+                raise ValueError("debug mode must be disabled in production")
+            if self.database_url.strip().lower().startswith("sqlite"):
+                raise ValueError("production requires PostgreSQL; SQLite is development/test only")
+            if self.jwt_algorithm != "HS256":
+                raise ValueError("this service currently supports HS256 only; configure a supported OIDC/JWKS integration before changing algorithms")
+            if len(self.secret_key.encode("utf-8")) < 32 or self.secret_key.startswith("development-only"):
+                raise ValueError("production requires a non-development signing secret of at least 32 bytes")
+            if not self.jwt_issuer.strip() or not self.jwt_audience.strip():
+                raise ValueError("production JWT issuer and audience must be configured")
+            if not self.trusted_hosts or not self.cors_origins:
+                raise ValueError("production trusted hosts and CORS origins must be explicitly configured")
+            if any(host.strip() == "*" for host in self.trusted_hosts):
+                raise ValueError("wildcard trusted hosts are not allowed in production")
+            if any(origin.strip() == "*" for origin in self.cors_origins):
+                raise ValueError("wildcard CORS origins are not allowed in production")
         return self
 
     @classmethod
