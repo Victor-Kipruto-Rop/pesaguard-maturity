@@ -1,0 +1,28 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["packages/core-domain"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+exclude = [
+  ".venv",
+  "venv",
+  "build",
+  "dist",
+  "gateway/.venv",
+  "services/*/.venv",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501"]
+
+[tool.coverage.run]
+branch = true
+source = ["packages/core-domain/pesaguard_core"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 80
