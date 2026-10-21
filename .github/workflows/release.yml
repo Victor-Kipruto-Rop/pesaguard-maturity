@@ -21,7 +21,7 @@ jobs:
       - name: Lint core domain
         run: ruff check packages/core-domain/pesaguard_core tests/unit
       - name: Test core domain
-        run: python -m pytest -q tests/unit/test_reconciliation_matching.py tests/unit/test_repository_hygiene.py
+        run: python -m pytest -q tests/unit/test_reconciliation_matching.py tests/unit/test_statement_csv_import.py tests/unit/test_repository_hygiene.py
 
   publish-source-release:
     needs: validate
