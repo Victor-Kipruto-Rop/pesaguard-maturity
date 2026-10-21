@@ -19,6 +19,10 @@ def get_session_factory(settings: Settings):
 
 
 def init_db(settings: Settings) -> None:
+    # Production schema changes must be applied through reviewed Alembic
+    # migrations during deployment, never implicitly by application startup.
+    if settings.environment.strip().lower() == "production":
+        return
     engine = get_engine(settings)
     Base.metadata.create_all(bind=engine)
 
