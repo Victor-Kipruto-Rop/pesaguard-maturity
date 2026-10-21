@@ -12,7 +12,8 @@ import unicodedata
 from dataclasses import dataclass
 from datetime import datetime
 from decimal import Decimal
-from typing import Literal, Sequence
+from collections.abc import Sequence
+from typing import Literal
 
 
 MatchStatus = Literal["matched", "unmatched", "ambiguous"]
