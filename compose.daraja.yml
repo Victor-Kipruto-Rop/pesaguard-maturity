@@ -33,6 +33,13 @@ services:
       dockerfile: services/daraja-integration-service/Dockerfile
     ports: ["127.0.0.1:18082:8080"]
   transaction-processing-service:
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/pesaguard
+      SPRING_DATASOURCE_USERNAME: pesaguard
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-local-only-change-me}
+    depends_on:
+      postgres:
+        condition: service_healthy
     build:
       context: ./apps/java
       dockerfile: services/transaction-processing-service/Dockerfile
