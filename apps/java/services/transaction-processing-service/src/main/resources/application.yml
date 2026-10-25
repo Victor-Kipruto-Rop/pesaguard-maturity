@@ -1,6 +1,10 @@
 spring:
   application:
     name: transaction-processing-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/pesaguard}
+    username: ${SPRING_DATASOURCE_USERNAME:pesaguard}
+    password: ${SPRING_DATASOURCE_PASSWORD:local-only-change-me}
 server:
   port: ${PORT:8080}
 management:
@@ -8,12 +12,3 @@ management:
     web:
       exposure:
         include: health,info
-  endpoint:
-    health:
-      probes:
-        enabled: true
-spring:
-  datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/pesaguard}
-    username: ${SPRING_DATASOURCE_USERNAME:pesaguard}
-    password: ${SPRING_DATASOURCE_PASSWORD:local-only-change-me}
