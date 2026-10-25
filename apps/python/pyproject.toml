@@ -1,0 +1,6 @@
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
