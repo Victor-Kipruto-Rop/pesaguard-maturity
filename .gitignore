@@ -1,13 +1,25 @@
-# Local PKI and deployment artifacts
-security/pki/
-deployments/local-mtls/
-deployments/kubernetes/base/gateway-tls-secret.yaml
-
-# Python bytecode and caches
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+# Python
 __pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-
-# Gateway local env should not be committed
-gateway/.env
+.pytest_cache/
+.venv/
+dist/
+# Java
+.gradle/
+**/build/
+*.class
+# Elixir
+_deps/
+_build/
+cover/
+# Editor/OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
