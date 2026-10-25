@@ -1,0 +1,7 @@
+version: 1
+roles:
+  organization_owner: {description: Manage organization workspace and membership}
+  finance_operator: {description: Review transactions and reconciliation exceptions}
+  developer: {description: Manage authorized applications, keys and webhooks}
+  auditor: {description: Read permitted audit and reporting records}
+  platform_support: {description: Time-bound, audited restricted support access}

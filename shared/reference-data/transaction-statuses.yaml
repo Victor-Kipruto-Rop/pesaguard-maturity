@@ -1,0 +1,5 @@
+version: 1
+statuses: [received, accepted_for_processing, pending_provider_outcome, succeeded, failed, cancelled, outcome_unknown, review_required]
+notes:
+  - Provider callback state and internal processing state remain distinguishable.
+  - A timeout alone does not prove a payment failed.

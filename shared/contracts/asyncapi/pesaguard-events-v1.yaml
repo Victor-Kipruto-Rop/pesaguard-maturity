@@ -1,0 +1,7 @@
+asyncapi: 3.0.0
+info:
+  title: PesaGuard Events
+  version: 1.0.0
+  description: Scaffold only; define channels and messages before publishing events.
+channels: {}
+operations: {}
