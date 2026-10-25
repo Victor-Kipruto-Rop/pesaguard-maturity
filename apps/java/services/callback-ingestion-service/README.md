@@ -1,3 +1,3 @@
-# Callback ingestion service
+# Callback Ingestion Service (Java)
 
-**Language: Java / Spring Boot.** Receive supported Daraja callbacks, persist original payload and receipt metadata durably, deduplicate provider retries, validate expected shape, and acknowledge according to a tested durable-acceptance policy. Preserve provider evidence; redact sensitive values from logs. Initially may live inside `daraja-integration-service`.
+P0 boundary for Daraja callback receipt. Validate request size and schema, persist immutable evidence, deduplicate durably, attach correlation IDs and commit before acknowledging. Handle repeated callbacks safely. Never log secrets or full sensitive payloads. Validate authenticity only with mechanisms actually supported by the configured Daraja product; do not invent signature headers. Hand work off via an outbox or durable queue.
