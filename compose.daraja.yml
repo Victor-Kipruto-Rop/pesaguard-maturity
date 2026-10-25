@@ -1,0 +1,46 @@
+name: pesaguard-daraja-scaffold
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: pesaguard
+      POSTGRES_USER: pesaguard
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-local-only-change-me}
+    ports: ["127.0.0.1:55432:5432"]
+    volumes: ["pesaguard_daraja_pg:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pesaguard -d pesaguard"]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+  redis:
+    image: redis:7-alpine
+    ports: ["127.0.0.1:56379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+  reconciliation-service:
+    build: ./apps/python/services/reconciliation-service
+    ports: ["127.0.0.1:18081:8080"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+  daraja-integration-service:
+    build:
+      context: ./apps/java
+      dockerfile: services/daraja-integration-service/Dockerfile
+    ports: ["127.0.0.1:18082:8080"]
+  transaction-processing-service:
+    build:
+      context: ./apps/java
+      dockerfile: services/transaction-processing-service/Dockerfile
+    ports: ["127.0.0.1:18083:8080"]
+  webhook-delivery-service:
+    build:
+      context: ./apps/java
+      dockerfile: services/webhook-delivery-service/Dockerfile
+    ports: ["127.0.0.1:18084:8080"]
+volumes:
+  pesaguard_daraja_pg:
