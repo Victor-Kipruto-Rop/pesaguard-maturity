@@ -12,3 +12,8 @@ management:
     health:
       probes:
         enabled: true
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/pesaguard}
+    username: ${SPRING_DATASOURCE_USERNAME:pesaguard}
+    password: ${SPRING_DATASOURCE_PASSWORD:local-only-change-me}
