@@ -1,0 +1,2 @@
+rootProject.name = 'pesaguard-java-services'
+include 'services:daraja-integration-service', 'services:transaction-processing-service', 'services:webhook-delivery-service', 'shared'

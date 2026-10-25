@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: daraja-integration-service
+server:
+  port: ${PORT:8080}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+# Inject provider credentials from a secret manager/environment; never commit credentials.

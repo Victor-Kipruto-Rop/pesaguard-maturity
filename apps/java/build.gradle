@@ -1,0 +1,2 @@
+allprojects { group = 'ke.co.pesaguard'; version = '0.1.0'; repositories { mavenCentral() } }
+subprojects { tasks.withType(Test).configureEach { useJUnitPlatform() } }
