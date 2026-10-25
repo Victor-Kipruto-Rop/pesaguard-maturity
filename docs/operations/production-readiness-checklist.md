@@ -1,0 +1,11 @@
+# Production readiness checklist
+- [ ] Daraja sandbox flows validated against approved provider documentation.
+- [ ] Production access approved and credentials stored in a secrets manager.
+- [ ] Sandbox and production endpoints, keys, credentials and callbacks are separated.
+- [ ] Duplicate, delayed, reordered and missing callbacks tested.
+- [ ] Unknown outcomes and status recovery documented and tested.
+- [ ] Tenant authorization tested at API, database, worker, cache, storage and event boundaries.
+- [ ] Idempotency, retries, timeouts, dead-letter recovery and replay tested.
+- [ ] Logs redact credentials and sensitive data.
+- [ ] Metrics, traces, alerts, backups, restore drills and runbooks exist.
+- [ ] Security, load and resilience tests pass before release.
