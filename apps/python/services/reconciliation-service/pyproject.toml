@@ -1,0 +1,7 @@
+[project]
+name = "pesaguard-reconciliation-service"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = ["fastapi", "uvicorn[standard]", "pydantic-settings", "sqlalchemy", "psycopg[binary]", "alembic"]
+[project.optional-dependencies]
+test = ["pytest", "pytest-cov", "httpx"]
