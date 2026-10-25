@@ -42,5 +42,17 @@ services:
       context: ./apps/java
       dockerfile: services/webhook-delivery-service/Dockerfile
     ports: ["127.0.0.1:18084:8080"]
+  data-quality-service:
+    build: ./apps/python/services/data-quality-service
+    ports: ["127.0.0.1:18085:8080"]
+  risk-service:
+    build: ./apps/python/services/risk-service
+    ports: ["127.0.0.1:18086:8080"]
+  reporting-service:
+    build: ./apps/python/services/reporting-service
+    ports: ["127.0.0.1:18087:8080"]
+  statement-import-service:
+    build: ./apps/python/services/statement-import-service
+    ports: ["127.0.0.1:18088:8080"]
 volumes:
   pesaguard_daraja_pg:
